@@ -3,18 +3,11 @@
  * @return {boolean}
  */
 var isPalindrome = function (s) {
-  if (s.length === 1) {
-    return true;
-  }
+  s = s.toLowerCase().split("");
   const regex = /^[a-zA-Z0-9]+$/;
-  const clean = [];
-  for (let i = 0; i < s.length; i++) {
-    if (regex.test(s[i])) {
-      clean.push(s[i].toLowerCase());
-    }
-  }
-  for (let i = 0, j = clean.length - 1; i <= j; i++, j--) {
-    if (clean[i] !== clean[j]) {
+  const filtered = s.filter((char) => regex.test(char));
+  for (let i = 0, j = filtered.length - 1; i < j; i++, j--) {
+    if (filtered[i] !== filtered[j]) {
       return false;
     }
   }
