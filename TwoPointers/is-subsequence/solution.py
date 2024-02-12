@@ -1,15 +1,9 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        pon1 = 0
-        pon2 = 0
-        while pon1 < len(s) and pon2 < len(t):
-            if s[pon1] == t[pon2]:
-                pon1 += 1
-                pon2 += 1
-            else:
-                pon2 += 1
-        print(pon1)
-        if pon1 == len(s):
-            return True
-        else:
-            return False
+        p1 = 0
+        p2 = 0
+        while p1 < len(s) and p2 < len(t):
+            if s[p1] == t[p2]:
+                p1 +=1
+            p2 +=1
+        return p1 == len(s)
