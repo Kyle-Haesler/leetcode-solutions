@@ -1,16 +1,31 @@
+/**
+ * @param {string} s
+ * @param {string[]} words
+ * @return {number[]}
+ */
 var findSubstring = function (s, words) {
-  const potentials = [words.join("")];
-  let counter = 1;
-  while (counter <= words.length) {
-    for (let i = 0; i < words.length - 1; i++) {
-      let temp = words[i + 1];
-      words[i + 1] = words[i];
-      words[i] = temp;
-      potentials.push(words.join(""));
-    }
-    counter++;
+  const wordLength = words[0].length;
+  const totalLength = words.length * wordLength;
+  const result = [];
+  const wordCount = {};
+  for (let word of words) {
+    wordCount[word] = (wordCount[word] || 0) + 1;
   }
-  console.log(potentials);
-};
+  for (let i = 0; i < s.length - totalLength + 1; i++) {
+    const seen = {};
+    let matches = 0;
+    for (let j = i; j < i + totalLength; j += wordLength) {
+      const temp = s.substring(j, j + wordLength);
 
-findSubstring("potato", ["ab", "cd", "ef"]);
+      if (wordCount[temp]) {
+        seen[temp] = (seen[temp] || 0) + 1;
+        if (seen[temp] > wordCount[temp]) break;
+        matches++;
+      } else {
+        break;
+      }
+      if (matches === words.length) result.push(i);
+    }
+  }
+  return result;
+};
