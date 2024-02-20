@@ -4,38 +4,38 @@
  * @return {string}
  */
 var minWindow = function (s, t) {
-  let minimumTotal = Infinity;
-  let minLower = 0;
-  let minHigher = 0;
-
-  const tCount = {};
-  for (let i of t) {
-    tCount[i] = (tCount[i] || 0) + 1;
-  }
-  for (let i = 0; i < s.length; i++) {
-    let matches = 0;
-    // if starting letter isnt in t, skip
-    const seen = {};
-    if (!tCount[s[i]]) continue;
-    for (let j = i; j < s.length; j++) {
-      const temp = s[j];
-
-      if (tCount[temp]) {
-        seen[temp] = (seen[temp] || 0) + 1;
-        if (seen[temp] <= tCount[temp]) {
-          matches++;
-        }
-        if (matches === t.length) {
-          const len = j - i + 1;
-          if (len < minimumTotal) {
-            minimumTotal = len;
-            minLower = i;
-            minHigher = j + 1;
-          }
-          break;
-        }
-      }
+  let map = new Map();
+  for (let char of t) {
+    if (!map.has(char)) {
+      map.set(char, 1);
+    } else {
+      map.set(char, map.get(char) + 1);
     }
   }
-  return s.substring(minLower, minHigher);
+  let left = 0;
+  let right = 0;
+  let len = Infinity;
+  let minWindow = "";
+  let count = map.size;
+  while (right < s.length) {
+    let rLetter = s[right];
+    if (map.has(rLetter)) {
+      map.set(rLetter, map.get(rLetter) - 1);
+      if (map.get(rLetter) === 0) count--;
+    }
+    right++;
+    while (count === 0) {
+      if (right - left < len) {
+        len = right - left;
+        minWindow = s.slice(left, right);
+      }
+      let lLetter = s[left];
+      if (map.has(lLetter)) {
+        map.set(lLetter, map.get(lLetter) + 1);
+        if (map.get(lLetter) > 0) count++;
+      }
+      left++;
+    }
+  }
+  return minWindow;
 };
