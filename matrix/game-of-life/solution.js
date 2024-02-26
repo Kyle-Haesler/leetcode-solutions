@@ -5,9 +5,6 @@
 var gameOfLife = function (board) {
   const rowLength = board.length;
   const colLength = board[0].length;
-  const newBoard = Array.from({ length: rowLength }, () =>
-    new Array(colLength).fill(0)
-  );
   const deadCords = [];
   const aliveCords = [];
   // alright so now we basically have to check every touching square which is going to be a little ridiculous
