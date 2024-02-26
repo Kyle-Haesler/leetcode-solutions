@@ -1,41 +1,40 @@
-class Solution(object):
-    def isValidSudoku(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: bool
-        """
-        # first, we go through the rows!
-        for i in range(len(board)):
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row_length = len(board)
+        col_length = len(board[0])
+
+        # check the rows
+        for i in range(row_length):
             seen = set()
-            for j in range(len(board[0])):
-                if board[i][j] != ".":
-                    if board[i][j] in seen:
+            for j in range(col_length):
+                cell = board[i][j]
+                if cell != ".":
+                    if cell in seen:
                         return False
                     else:
-                        seen.add(board[i][j])
-        # now, we go through the columns, just flip the logic!
-        for i in range(len(board)):
+                        seen.add(cell)
+        # check the cols
+        for i in range(row_length):
             seen = set()
-            for j in range(len(board[0])):
-                if board[j][i] != ".":
-                    if board[j][i] in seen:
+            for j in range(col_length):
+                cell = board[j][i]
+                if cell != ".":
+                    if cell in seen:
                         return False
                     else:
-                        seen.add(board[j][i])
-        # excellent, now we do the 3X3 grid
-        for rowStart in range(0, len(board), 3):
-            for colStart in range(0, len(board[0]), 3):
+                        seen.add(cell)
+        
+        # check the grids
+        for i in range(0, row_length, 3):
+            for j in range(0, col_length, 3):
                 seen = set()
-                for i in range(rowStart, rowStart + 3):
-                    for j in range(colStart, colStart + 3):
-                        if board[i][j] != ".":
-                            if board[i][j] in seen:
+                for row in range(i, i + 3, 1):
+                    for col in range(j, j + 3, 1):
+                        cell = board[row][col]
+                        if cell != ".":
+                            if cell in seen:
                                 return False
                             else:
-                                seen.add(board[i][j])
-        
+                                seen.add(cell)
         
         return True
-
-                
-        
