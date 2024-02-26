@@ -1,22 +1,17 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        ran = dict()
-        for r in ransomNote:
-            if r in ran:
-                ran[r] = ran[r] + 1
-            else:
-                ran[r] = 1
-        mag = dict()
-        for m in magazine:
-            if m in mag:
-                mag[m] = mag[m] + 1
-            else:
-                mag[m] = 1
+        ranMap = {}
+        for letter in ransomNote:
+            ranMap[letter] = ranMap.get(letter,0) + 1
         
-        for (key, value) in ran.items():
-            if key not in mag:
+        magMap = {}
+        for letter in magazine:
+            magMap[letter] = magMap.get(letter,0) + 1
+        
+        for letter in ransomNote:
+            if letter not in magMap:
                 return False
-            else:
-                if mag[key] < value:
+            if letter in magMap:
+                if magMap[letter] < ranMap[letter]:
                     return False
         return True
