@@ -4,27 +4,16 @@
  * @return {number[]}
  */
 var twoSum = function (nums, target) {
-  const diff = new Map();
-  for (let num of nums) {
-    const sub = target - num;
-    if (diff.has(sub)) {
-      diff.set(sub, diff.get(sub) + 1);
-    } else {
-      diff.set(sub, 1);
-    }
-  }
-  const result = [];
+  const res = new Map();
+  // going to make a map that has the difference of the current number - {number, index}
   for (let i = 0; i < nums.length; i++) {
-    if (diff.has(nums[i])) {
-      if (target - nums[i] === nums[i]) {
-        if (diff.get(nums[i]) > 1) {
-          result.push(i);
-        }
-      } else {
-        result.push(i);
+    const difference = target - nums[i];
+    if (res.has(nums[i])) {
+      if (res.get(nums[i]).index !== i) {
+        return [res.get(nums[i]).index, i];
       }
+    } else {
+      res.set(difference, { number: nums[i], index: i });
     }
   }
-  console.log(diff);
-  return result;
 };
