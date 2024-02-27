@@ -4,17 +4,19 @@
  * @return {boolean}
  */
 var containsNearbyDuplicate = function (nums, k) {
-  const score = new Map();
+  // alrighty, we are going to compare in place, because they are indexes, we dont even need to sort and can just go along during the iteration
+  const map = new Map();
   for (let i = 0; i < nums.length; i++) {
-    if (score.has(nums[i])) {
-      if (Math.abs(i - score.get(nums[i]) <= k)) {
+    if (map.has(nums[i])) {
+      if (Math.abs(map.get(nums[i]) - i) <= k) {
         return true;
       } else {
-        score.set(nums[i], i);
+        map.set(nums[i], i);
       }
     } else {
-      score.set(nums[i], i);
+      map.set(nums[i], i);
     }
   }
+
   return false;
 };
