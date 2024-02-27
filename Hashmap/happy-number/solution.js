@@ -3,19 +3,18 @@
  * @return {boolean}
  */
 var isHappy = function (n) {
-  let sumSet = new Set();
+  // edge case starting with 1
+  if (n === 1) return true;
+  // going to use a set to keep track of numbers we have had already and use that to break
+  const tracker = new Set();
   while (n !== 1) {
-    const strnum = n.toString();
-
+    n = n.toString();
     let sum = 0;
-    for (let num of strnum) {
-      sum = sum + Number(num) * Number(num);
+    for (i of n) {
+      sum += Number(i) * Number(i);
     }
-    if (sumSet.has(sum)) {
-      return false;
-    } else {
-      sumSet.add(sum);
-    }
+    if (tracker.has(sum)) return false;
+    tracker.add(sum);
     n = sum;
   }
   return true;
