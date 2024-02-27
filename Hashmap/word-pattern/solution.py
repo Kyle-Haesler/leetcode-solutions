@@ -1,24 +1,26 @@
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
-        pat = list(pattern)
-        sat = s.split(" ")
-        print(pat, sat)
-        if len(pat) != len(sat):
+        # convert s to list 
+        s = s.split(" ")
+        # edge case - if lengths are not the same it is false
+        if len(s) != len(pattern):
             return False
-        pmap = dict()
-        smap = dict()
-        for i in range(len(pat)):
-            pchar = pat[i]
-            schar = sat[i]
+        # double linkage map to check both ways
+        pmap = {}
+        smap = {}
+        for i in range(len(pattern)):
+            pchar = pattern[i]
+            schar = s[i]
+
             if pchar in pmap:
-                if pmap[pchar] != schar:
+                if pmap.get(pchar) != schar:
                     return False
             else:
-                pmap[pchar] = schar
+                pmap[pchar]=schar
+            
             if schar in smap:
-                if smap[schar] != pchar:
+                if smap.get(schar) != pchar:
                     return False
             else:
-                smap[schar] = pchar
-        
+                smap[schar]=pchar
         return True
