@@ -4,33 +4,21 @@
  * @return {boolean}
  */
 var isAnagram = function (s, t) {
-  if (s.length !== t.length) {
-    return false;
+  // edge case - if lengths arent the same, false
+  if (s.length !== t.length) return false;
+  // make counts for both strings, then compare the counts
+  const smap = {};
+  for (char of s) {
+    smap[char] = (smap[char] || 0) + 1;
   }
-  const smap = new Map();
-  const tmap = new Map();
+  const tmap = {};
+  for (char of t) {
+    tmap[char] = (tmap[char] || 0) + 1;
+  }
+  // compare, make sure they are the same
   for (let char of s) {
-    if (smap.has(char)) {
-      smap.set(char, smap.get(char) + 1);
-    } else {
-      smap.set(char, 1);
-    }
-  }
-  for (let char of t) {
-    if (tmap.has(char)) {
-      tmap.set(char, tmap.get(char) + 1);
-    } else {
-      tmap.set(char, 1);
-    }
-  }
-  for (let [key, value] of smap.entries()) {
-    if (!tmap.has(key)) {
-      return false;
-    } else {
-      if (tmap.get(key) !== value) {
-        return false;
-      }
-    }
+    if (!tmap[char]) return false;
+    if (smap[char] !== tmap[char]) return false;
   }
   return true;
 };

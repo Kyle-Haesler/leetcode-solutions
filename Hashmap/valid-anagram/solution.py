@@ -1,25 +1,18 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        # edge case - if lengths are not the same, return False
         if len(s) != len(t):
             return False
-        smap = dict()
-        tmap = dict()
+        # make letter counts for each
+        smap = {}
         for char in s:
-            if char in smap:
-                smap[char] = smap[char] + 1
-            else:
-                smap[char] = 1
+            smap[char] = smap.get(char,0) + 1
+        tmap = {}
         for char in t:
-            if char in tmap:
-                tmap[char] = tmap[char] + 1
-            else:
-                tmap[char] = 1
-        for (key, value) in smap.items():
-            if key not in tmap:
+            tmap[char] = tmap.get(char,0)+1
+        for char in s:
+            if char not in tmap:
                 return False
-            else:
-                if tmap[key] != value:
-                    return False
-                
+            if smap[char] != tmap[char]:
+                return False
         return True
-            
