@@ -3,25 +3,21 @@
  * @return {boolean}
  */
 var isValid = function (s) {
-  const stack = [];
   const key = {
     ")": "(",
-    "}": "{",
     "]": "[",
+    "}": "{",
   };
-  for (let char of s) {
+  const stack = [];
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
     if (char === "(" || char === "{" || char === "[") {
       stack.push(char);
     } else {
+      if (stack.length === 0) return false;
       const popped = stack.pop();
-      if (key[char] !== popped) {
-        return false;
-      }
+      if (key[char] !== popped) return false;
     }
   }
-  if (!stack.length) {
-    return true;
-  } else {
-    return false;
-  }
+  return stack.length === 0;
 };
