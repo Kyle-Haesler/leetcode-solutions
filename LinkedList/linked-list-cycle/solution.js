@@ -11,17 +11,15 @@
  * @return {boolean}
  */
 var hasCycle = function (head) {
-  let pone = head;
-  if (!head || !head.next) {
-    return false;
-  }
-  let ptwo = head.next;
-  while (pone !== ptwo) {
-    pone = pone.next;
-    if (!ptwo || !ptwo.next || !ptwo.next.next) {
-      return false;
+  if (!head) return false;
+  let tort = head;
+  let rabbit = head;
+  while (rabbit && rabbit.next) {
+    tort = tort.next;
+    rabbit = rabbit.next.next;
+    if (tort === rabbit) {
+      return true;
     }
-    ptwo = ptwo.next.next;
   }
-  return true;
+  return false;
 };

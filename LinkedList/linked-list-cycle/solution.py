@@ -6,13 +6,13 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        pone = head
-        if not head or not head.next:
+        if not head:
             return False
-        ptwo = head.next
-        while pone != ptwo:
-            pone = pone.next
-            if not ptwo or not ptwo.next or not ptwo.next.next:
-                return False
-            ptwo = ptwo.next.next
-        return True
+        tort = head
+        rabbit = head
+        while rabbit and rabbit.next:
+            tort = tort.next
+            rabbit = rabbit.next.next
+            if tort == rabbit:
+                return True
+        return False
