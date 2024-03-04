@@ -6,14 +6,13 @@ class Solution:
             "]": "["
         }
         stack = []
-        for i in range(len(s)):
-            char = s[i]
-            if char == "(" or char == "[" or char == "{":
+        for char in s:
+            if char == "(" or char == "{" or char == "[":
                 stack.append(char)
             else:
-                if len(stack) == 0:
+                if not len(stack):
                     return False
-                popped = stack.pop()
-                if key[char] != popped:
+                match = stack.pop()
+                if key[char] != match:
                     return False
-        return True if len(stack) == 0 else False
+        return len(stack) == 0
