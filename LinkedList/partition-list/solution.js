@@ -11,24 +11,26 @@
  * @return {ListNode}
  */
 var partition = function (head, x) {
-  const start1 = new ListNode(0);
-  const start2 = new ListNode(0);
-  let p1 = start1;
-  let p2 = start2;
-  let p = head;
-  while (p) {
-    if (p.val < x) {
-      p1.next = p;
-      p = p.next;
-      p1.next.next = null;
-      p1 = p1.next;
+  if (!head || !head.next) return head;
+  const smallList = new ListNode();
+  let small = smallList;
+  const bigList = new ListNode();
+  let big = bigList;
+  let curr = head;
+  let connector = null;
+  while (curr) {
+    if (curr.val < x) {
+      small.next = new ListNode(curr.val);
+      small = small.next;
+      connector = small;
     } else {
-      p2.next = p;
-      p = p.next;
-      p2.next.next = null;
-      p2 = p2.next;
+      big.next = new ListNode(curr.val);
+      big = big.next;
     }
+    curr = curr.next;
   }
-  p1.next = start2.next;
-  return start1.next;
+
+  if (!connector) return bigList.next;
+  connector.next = bigList.next;
+  return smallList.next;
 };
