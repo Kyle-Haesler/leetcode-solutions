@@ -2,23 +2,21 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.dict = dict()
+        self.map = dict()
 
     def get(self, key: int) -> int:
-        if key in self.dict:
-            val = self.dict.pop(key)
-            self.dict[key] = val
-            return val
+        if key in self.map:
+            value = self.map.pop(key)
+            self.map[key] = value
+            return value
         else:
             return -1
 
     def put(self, key: int, value: int) -> None:
-        if key in self.dict:
-            self.dict.pop(key)
-        elif len(self.dict) == self.capacity:
-            lru_key = next(iter(self.dict))
-            del self.dict[lru_key]
-        self.dict[key] = value
+        if self.get(key) == -1:
+            if self.capacity == len(self.map):
+                self.map.pop(next(iter(self.map)))
+        self.map[key] = value
 
 
 # Your LRUCache object will be instantiated and called as such:
