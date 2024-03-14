@@ -11,28 +11,33 @@
  * @return {ListNode}
  */
 var rotateRight = function (head, k) {
-  // edge cases: head is null or only one item
-  if (!head || !head.next) return head;
-  let length = 1;
-  let current = head;
-  // simple count here
-  while (current.next) {
-    current = current.next;
-    length++;
-  }
-  // edge case: k  % length === 0 meaning its a multiple so we don't have to do anything
-  if (k % length === 0) return head;
-  // make it a circle
-  current.next = head;
+  if (!head || k === 0) return head;
+  let length = 0;
+  let curr = head;
+  let lastEl = null;
 
-  const shifts = length - (k % length);
-  let count = 1;
-  let prev = null;
-  while (count <= shifts) {
-    prev = head;
-    head = head.next;
-    count++;
+  while (curr) {
+    length++;
+    lastEl = curr;
+    curr = curr.next;
   }
-  prev.next = null;
+  if (length === k || length === 1 || k % length === 0) return head;
+  const indexToCut = length - (k % length);
+
+  curr = head;
+
+  let counter = 1;
+  while (counter < indexToCut) {
+    curr = curr.next;
+    counter++;
+  }
+  const backHalf = curr.next;
+  const frontHalf = head;
+  // chop it off
+  curr.next = null;
+  // attach
+  head = backHalf;
+  lastEl.next = frontHalf;
+
   return head;
 };
