@@ -10,12 +10,12 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function (root, count = 0) {
+var maxDepth = function (root) {
   if (!root) {
-    return count;
+    return 0;
   }
-  count++;
-  const leftCount = maxDepth(root.left, count);
-  const rightCount = maxDepth(root.right, count);
+
+  const leftCount = maxDepth(root.left) + 1;
+  const rightCount = maxDepth(root.right) + 1;
   return Math.max(leftCount, rightCount);
 };
