@@ -3,16 +3,14 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function (s) {
-  if (s.length < 2) return s.length;
   let max = 0;
-
-  let res = [];
+  let result = [];
   for (let i = 0; i < s.length; i++) {
-    while (res.includes(s[i])) {
-      res.shift();
+    while (result.includes(s[i])) {
+      result.shift();
     }
-    res.push(s[i]);
-    max = Math.max(max, res.length);
+    result.push(s[i]);
+    max = Math.max(max, result.length);
   }
-  return Math.max(max, res.length);
+  return max;
 };
